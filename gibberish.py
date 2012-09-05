@@ -23,9 +23,10 @@ def get_wordlist(clean_text):
 
 
 def add_word_to_xgrams(xgrams, x, word):
-    padded_word = " "*(x-1)+ word + " "*(x-1)
+    padding = x-1
+    padded_word = " "*padding+ word + " "*padding
 
-    for i in range( len(word)+(x-1) ):
+    for i in range( len(word)+padding ):
         gram = padded_word[i:i+x]
         print gram
         
@@ -48,8 +49,9 @@ def add_word_to_xgrams(xgrams, x, word):
 def change_nested_element(loc, nested, funct):
     if len(loc) == 1 :
         nested[loc[0]] = funct(nested[loc[0]])
+        return nested[loc[0]]
     else:
-        change_nested_element(loc[1:], nested[loc[0]], funct)
+        return change_nested_element(loc[1:], nested[loc[0]], funct)
 
 
 def x_nested_array(nesting, length):
@@ -65,11 +67,52 @@ def convert_char_to_int(c):
     if c in string.lowercase:
         return ord(c) - 96
     else:
-        print "invalid char : " + c
+        print "invalid char : " + c + " " + ord(c)
+
+def convert_int_to_char(i):
+    if i == 0 :
+        return " "
+        #if 96 <= i <= 122 :
+    else:
+        return chr(i+96)
+    #else:
+    #    print "invalid int: " + str(i) + " " + chr(i)
+
+
+
 
 
 #generate string
+def generate_string(xgrams, x):
+    padding = x-1
+    string = " "*padding
 
+    while True:
+        string = add_likely_char(string, xgrams, x)
+        if string[-1*padding:] == " "*padding: #add m more
+            break
+    return string.strip()
+
+
+def add_likely_char(string, xgrams, x):
+    padding = x-1
+    print "adding char to : \"" + string + "\""
+    loc_string = map(convert_char_to_int, string[-1*padding:])
+    print loc_string
+    probabilities = change_nested_element(loc_string, xgrams, lambda x: x)
+
+    print probabilities
+
+    best = max(probabilities)
+    print "best " + str(best) #TODO randomness
+    index = probabilities.index(best)
+    print "index " + str(index)
+    char = convert_int_to_char(index)
+    print "char " + char
+
+    string += char
+    print string
+    return string
 
 
 #tests
@@ -85,11 +128,13 @@ def tests():
     address_words = get_wordlist(address)
     print address_words
 
-    trigrams = x_nested_array(2, 27)
+    bigrams = x_nested_array(2, 27)
     for word in address_words:
-        add_word_to_xgrams(trigrams, 2, word)
-    print trigrams
+        add_word_to_xgrams(bigrams, 2, word)
+    print bigrams
 
+    for i in range(1):
+        print generate_string(bigrams, 2)
 
 
 #main
