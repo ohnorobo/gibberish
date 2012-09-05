@@ -1,0 +1,7 @@
+A gibberish word creator using markov chains
+
+This program learns the low-level characteristics of a language through ngrams, then uses a markov chain to invent new plausible sounding words for that language.
+
+
+Eventual features:
+picking the language of your choice from wikipedia to learn from
