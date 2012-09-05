@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, pprint
+import string, pprint, random
 
 #get arguments
 # gibbrish generate [language-code] 
@@ -96,24 +96,46 @@ def generate_string(xgrams, x):
 
 def add_likely_char(string, xgrams, x):
     padding = x-1
-    print "adding char to : \"" + string + "\""
+    #print "adding char to : \"" + string + "\""
     loc_string = map(convert_char_to_int, string[-1*padding:])
-    print loc_string
+    #print loc_string
     probabilities = change_nested_element(loc_string, xgrams, lambda x: x)
 
-    print probabilities
+    #print probabilities
 
-    best = max(probabilities)
-    print "best " + str(best) #TODO randomness
-    index = probabilities.index(best)
-    print "index " + str(index)
+    index = choose_random_index(probabilities)
+    #print "index " + str(index)
     char = convert_int_to_char(index)
-    print "char " + char
+    #print "char " + char
 
     string += char
-    print string
+    #print string
     return string
 
+
+#takes a list of numbers [a,b,c,d]
+#returns the index of one of those numbers
+#with a probability number/list_sum
+def choose_random_index(probabilities):
+    #best = max(probabilities)
+    #print "best " + str(best) #TODO randomness
+    #index = probabilities.index(best)
+    #return index
+    list_sum = sum(probabilities)
+    
+    if list_sum == 0 : #if we've never seen this ngram before
+        return random.randrange(0, len(probabilities))
+    #is this what we want to do here?
+    #or should we try to avoid this situation?
+
+    height = random.randrange(0, list_sum)
+    climb = 0
+    for i in range(len(probabilities)):
+        if climb >= height :
+            return i
+        else:
+            climb += probabilities[i]
+        
 
 #tests
 def tests():
@@ -133,7 +155,7 @@ def tests():
         add_word_to_xgrams(bigrams, 2, word)
     print bigrams
 
-    for i in range(1):
+    for i in range(10):
         print generate_string(bigrams, 2)
 
 
