@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, pprint, random
+import string, pprint, random, re
 
 #get arguments
 # gibbrish generate [language-code] 
@@ -11,6 +11,18 @@ import string, pprint, random
 
 
 #get text
+def file_to_wordlist(language, filename):
+    filepath = "./data/" + language + "/clean/" + filename
+    f = open(filepath, "r")
+    content = f.read()
+    #content.rstrip()
+    re.sub(r'[a-z\ ]*', '', content)
+    return get_wordlist(content)
+
+
+
+
+
 
 #clean text
 
@@ -54,6 +66,10 @@ def change_nested_element(loc, nested, funct):
         return change_nested_element(loc[1:], nested[loc[0]], funct)
 
 
+
+
+#####Utilities
+
 def x_nested_array(nesting, length):
     if nesting == 1:
         return [0] * length
@@ -67,18 +83,20 @@ def convert_char_to_int(c):
     if c in string.lowercase:
         return ord(c) - 96
     else:
-        print "invalid char : " + c + " " + ord(c)
+        #print "invalid char : " + c + " " + str(ord(c))
+        return 0
 
 def convert_int_to_char(i):
     if i == 0 :
         return " "
         #if 96 <= i <= 122 :
-    else:
+    if 1 <= i <= 27:
         return chr(i+96)
-    #else:
+    else:
+        return " "
     #    print "invalid int: " + str(i) + " " + chr(i)
 
-
+######
 
 
 
@@ -146,17 +164,17 @@ def tests():
     print( x_nested_array(3, 2) )
     print( x_nested_array(2, 3) )
 
-    address = "four score and seven years ago our fathers brought forth on this continent a new nation conceived in liberty and dedicated to the proposition that all men are created equal now we are engaged in a great civil war testing whether that nation or any nation so conceived and so dedicated can long endure we are met on a great battle field of that war we have come to dedicate a portion of that field as a final resting place for those who here gave their lives that that nation might live it is altogether fitting and proper that we should do this but in a larger sense we can not dedicate we can not consecrate we can not hallow this ground the brave men living and dead who struggled here have consecrated it far above our poor power to add or detract the world will little note nor long remember what we say here but it can never forget what they did here it is for us the living rather to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced it is rather for us to be here dedicated to the great task remaining before us that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion that we here highly resolve that these dead shall not have died in vain that this nation under god shall have a new birth of freedom and that government of the people by the people for the people shall not perish from the earth"
-    address_words = get_wordlist(address)
+    address_words = file_to_wordlist("en", "GettysburgAddress")
     print address_words
 
-    bigrams = x_nested_array(2, 27)
+    n = 2
+    bigrams = x_nested_array(n, 27)
     for word in address_words:
-        add_word_to_xgrams(bigrams, 2, word)
+        add_word_to_xgrams(bigrams, n, word)
     print bigrams
 
     for i in range(10):
-        print generate_string(bigrams, 2)
+        print generate_string(bigrams, n)
 
 
 #main
