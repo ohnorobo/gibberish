@@ -43,13 +43,13 @@ def add_word_to_xgrams(xgrams, x, word):
 
     for i in range( len(word)+padding ):
         gram = padded_word[i:i+x]
-        print "gram " + gram
+        #print "gram " + gram
         
         #gram = list(gram)
         #loc_gram = map(convert_char_to_int, gram)
         #for g in gram:
         #    g = convert_char_to_int(g)
-        print gram
+        #print gram
 
         change_nested_element(gram, xgrams)
 
@@ -62,16 +62,21 @@ def add_word_to_xgrams(xgrams, x, word):
 #all elements of loc must be < length of nested arrays
 def change_nested_element(loc, nested):
     if len(loc) == 1 :
-        print "loc" + str(loc) + "\""
+        #print "loc" + str(loc) + "\""
         instantiate_or_increment(loc[0], nested)
         return nested[loc[0]]
     else:
-        print "loc" + str(len(loc)) + str(loc) + "\""
-        print nested
+        #print "loc" + str(len(loc)) + str(loc) + "\""
+        #print nested
         return change_nested_element(loc[1:], 
                                      instantiate_and_return(loc[0], nested))
 
 
+def get_nested_element(loc, nested):
+    if len(loc) == 1:
+        return nested[loc[0]]
+    else:
+        return get_nested_element(loc[1:], nested[loc[0]])
 
 def instantiate_or_increment(key, dicti):
     if key in dicti:
@@ -145,10 +150,12 @@ def add_likely_char(string, xgrams, x):
 def choose_likely_char(tail, xgrams, x):
     #TODO actually find this
     #will this always work or can we get uninitialized strings?
-    a = tail[0]
     #print "ab: " + a 
-    probabilities = xgrams[a]
+    probabilities = get_nested_element(tail, xgrams)
 
+    #fill a 'bucket' with elements
+    #represending the probability of choosing each element
+    #then choose one randomly
     bucket = []
     for key in probabilities:
         count = probabilities[key]
@@ -197,15 +204,14 @@ def tests():
     address_words = file_to_wordlist("en", "GettysburgAddress")
     print address_words
 
-    n = 2
-    #bigrams = x_nested_array(n, 27)
-    bigrams = {}
+    n = 3
+    trigrams = {}
     for word in address_words:
-        add_word_to_xgrams(bigrams, n, word)
-    pprint.pprint( bigrams )
+        add_word_to_xgrams(trigrams, n, word)
+    pprint.pprint( trigrams )
 
     for i in range(10):
-        print generate_string(bigrams, n)
+        print generate_string(trigrams, n)
 
 
 #main
