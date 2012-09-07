@@ -17,6 +17,9 @@ def file_to_wordlist(language, filename):
     content = f.read()
     #content.rstrip()
     re.sub(r'[a-z\ ]*', '', content)
+    for w in content:
+        if not (w.islower() or w == " "):
+            w = " "
     return get_wordlist(content)
 
 
@@ -40,15 +43,15 @@ def add_word_to_xgrams(xgrams, x, word):
 
     for i in range( len(word)+padding ):
         gram = padded_word[i:i+x]
-        print gram
+        print "gram " + gram
         
-        gram = list(gram)
-        loc_gram = map(convert_char_to_int, gram)
+        #gram = list(gram)
+        #loc_gram = map(convert_char_to_int, gram)
         #for g in gram:
         #    g = convert_char_to_int(g)
-        print loc_gram
+        print gram
 
-        change_nested_element(loc_gram, xgrams, lambda x: x+1)
+        change_nested_element(gram, xgrams)
 
     return xgrams
 
@@ -57,19 +60,32 @@ def add_word_to_xgrams(xgrams, x, word):
 #changes the element at array[a][b][c]
 #nesting must be >= length of loc
 #all elements of loc must be < length of nested arrays
-#funct is a function from x -> y
-def change_nested_element(loc, nested, funct):
+def change_nested_element(loc, nested):
     if len(loc) == 1 :
-        nested[loc[0]] = funct(nested[loc[0]])
+        print "loc" + str(loc) + "\""
+        instantiate_or_increment(loc[0], nested)
         return nested[loc[0]]
     else:
-        return change_nested_element(loc[1:], nested[loc[0]], funct)
+        print "loc" + str(len(loc)) + str(loc) + "\""
+        print nested
+        return change_nested_element(loc[1:], 
+                                     instantiate_and_return(loc[0], nested))
 
 
 
+def instantiate_or_increment(key, dicti):
+    if key in dicti:
+        dicti[key] += 1
+    else:
+        dicti[key] = 1
+
+def instantiate_and_return(key, dicti):
+    if not key in dicti:
+        dicti[key] = {}
+    return dicti[key]
 
 #####Utilities
-
+'''
 def x_nested_array(nesting, length):
     if nesting == 1:
         return [0] * length
@@ -95,7 +111,7 @@ def convert_int_to_char(i):
     else:
         return " "
     #    print "invalid int: " + str(i) + " " + chr(i)
-
+'''
 ######
 
 
@@ -103,34 +119,48 @@ def convert_int_to_char(i):
 #generate string
 def generate_string(xgrams, x):
     padding = x-1
-    string = " "*padding
+    string = " " + " "
 
     while True:
         string = add_likely_char(string, xgrams, x)
-        if string[-1*padding:] == " "*padding: #add m more
+        if string[-1:] == " ": #add until space
             break
     return string.strip()
 
 
 def add_likely_char(string, xgrams, x):
     padding = x-1
-    #print "adding char to : \"" + string + "\""
-    loc_string = map(convert_char_to_int, string[-1*padding:])
-    #print loc_string
-    probabilities = change_nested_element(loc_string, xgrams, lambda x: x)
 
-    #print probabilities
+    #print "string: " + string
 
-    index = choose_random_index(probabilities)
-    #print "index " + str(index)
-    char = convert_int_to_char(index)
-    #print "char " + char
+    tail = string[-1*padding:]
+    #print "tail: \"" + tail + "\""
+
+    char = choose_likely_char(tail, xgrams, x)
 
     string += char
     #print string
     return string
 
+def choose_likely_char(tail, xgrams, x):
+    #TODO actually find this
+    #will this always work or can we get uninitialized strings?
+    a = tail[0]
+    #print "ab: " + a 
+    probabilities = xgrams[a]
 
+    bucket = []
+    for key in probabilities:
+        count = probabilities[key]
+        bucket += key*count
+    #print bucket
+
+    picker = random.randrange(0,len(bucket))
+    char = bucket[picker]
+    #print "choosing:" + char
+    return char
+
+'''
 #takes a list of numbers [a,b,c,d]
 #returns the index of one of those numbers
 #with a probability number/list_sum
@@ -153,25 +183,26 @@ def choose_random_index(probabilities):
             return i
         else:
             climb += probabilities[i]
-        
+'''     
 
 #tests
 def tests():
-    pprint.pprint( convert_char_to_int(" ") )
-    pprint.pprint( convert_char_to_int("a") )
-    pprint.pprint( convert_char_to_int("z") )
+    #pprint.pprint( convert_char_to_int(" ") )
+    #pprint.pprint( convert_char_to_int("a") )
+    #pprint.pprint( convert_char_to_int("z") )
 
-    print( x_nested_array(3, 2) )
-    print( x_nested_array(2, 3) )
+    #print( x_nested_array(3, 2) )
+    #print( x_nested_array(2, 3) )
 
     address_words = file_to_wordlist("en", "GettysburgAddress")
     print address_words
 
     n = 2
-    bigrams = x_nested_array(n, 27)
+    #bigrams = x_nested_array(n, 27)
+    bigrams = {}
     for word in address_words:
         add_word_to_xgrams(bigrams, n, word)
-    print bigrams
+    pprint.pprint( bigrams )
 
     for i in range(10):
         print generate_string(bigrams, n)
