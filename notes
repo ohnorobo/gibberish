@@ -4,3 +4,7 @@ language codes are in ISO 639-1 since that's what wikipedia seems to be using
 
 get random wikipedia pages using Special:Random 
 http://en.wikipedia.org/wiki/Wikipedia:Random
+
+Getting data from an english language dictionary seems to skew the words to french/latin patterns. There are lots of less common words with romantic origin, while germanic stuff tends to be used very often, but that's not reflected in a flat wordlist.
+
+
