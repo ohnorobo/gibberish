@@ -12,5 +12,5 @@ for oldfile in $BASE/dirty/* ; do
     newfile=$BASE/clean/$filename
 
     touch newfile
-    ./wikifil.pl $oldfile > $newfile
+    ./resources/wikifil.pl $oldfile > $newfile
 done

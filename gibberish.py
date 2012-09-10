@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, pprint, random, re, os
+import string, pprint, random, re, os, sys, pickle
 
 
 ##########
@@ -122,23 +122,104 @@ def choose_likely_char(tail, xgrams, x):
    
 
 ##########
-#main
-# args = [lang, n, num_words]
-
-#read in wordlists from all files in lang/clean
-all_wordlist = file_to_wordlist("en", "2of12inf.txt")
-
 #make ngrams from all words
-n = 5
-grams = {}
-for word in all_wordlist:
-    add_word_to_xgrams(grams, n, word)
-#pprint.pprint( grams )
+def generate_ngrams(lang, n):
 
-#generate 
-for i in range(10):
-    print generate_string(grams, n)
+    #read in wordlists from all files in lang/clean
+    #TODO actually pull data from wikipedia
+    all_wordlist = file_to_wordlist(lang, "2of12inf.txt")
+
+    grams = {}
+    for word in all_wordlist:
+        add_word_to_xgrams(grams, n, word)
+
+    return grams
 
 
+
+def generate_m_strings(m, ngrams, n):
+    for i in range(m):
+        print generate_string(ngrams, n)
+
+
+
+##################
+##################
+#Administration methods
+
+def learn_ngrams(lang, n, all_ngrams):
+    #TODO do we want to be able to store different gram for the ame language?
+    # (say store both 4grams and 5grams for russian simultaniously)
+    ngrams = generate_ngrams(lang, n)
+    all_ngrams[lang] = [n, ngrams]
+
+def generate_strings(lang, m, all_ngrams):
+    if not all_ngrams.has_key(lang):
+        print "no ngrams learned for " + lang
+        print "current ngrams learned:"
+        print all_ngrams.keyset()
+    
+    else:
+        pair = all_ngrams[lang]
+        n = pair[0]
+        ngrams = pair[1]
+        #TODO move this method to another file
+        generate_m_strings(m, ngrams, n)
+
+
+def print_instructions():
+    print "How to use gibberish:"
+    print ""
+    print "./gibberish lang_code learn n"
+    print "finds examples of that language created ngrams"
+    print "ex: ./gibberish de learn 4"
+    print ""
+    print ".gibberish lang_code make n"
+    print "produces n nonsense words of the given language"
+    print "ex: ./gibberish en make 10"
+    print ""
+    print "language codes are in ISO 639-1"
+
+##########
+#main
+
+if not(len(sys.argv) == 4):
+    print_instructions()
+    exit()
+
+#get command args
+lang = sys.argv[1]
+operation = sys.argv[2]
+number = sys.argv[3]
+n = int(number)
+
+#get stored ngrams
+if os.path.isfile("./all_ngrams"):
+    f = file("./all_ngrams", "r")
+    all_ngrams = pickle.load(f)
+else:
+    all_ngrams = {}
+
+#learn about data
+if operation == "learn":
+    #TODO
+    learn_ngrams(lang, n, all_ngrams)
+
+    f = file("./all_ngrams", "w")
+    pickle.dump(all_ngrams, f) 
+
+    exit()
+
+#generate strings
+if operation == "make":
+    #TODO
+    generate_strings(lang, n, all_ngrams)
+    exit()
+
+else:
+    print_instructions()
+    exit()
+
+##########
 
 
