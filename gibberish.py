@@ -24,7 +24,6 @@ def generate_strings(lang, m, all_ngrams):
         pair = all_ngrams[lang]
         n = pair[0]
         ngrams = pair[1]
-        #TODO move this method to another file
         make.generate_m_strings(m, ngrams, n)
 
 
@@ -63,7 +62,6 @@ else:
 
 #learn about data
 if operation == "learn":
-    #TODO
     learn_ngrams(lang, n, all_ngrams)
 
     f = file("./all_ngrams", "w")
@@ -73,7 +71,6 @@ if operation == "learn":
 
 #generate strings
 if operation == "make":
-    #TODO
     generate_strings(lang, n, all_ngrams)
     exit()
 

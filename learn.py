@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, pprint, random, re, os, sys, pickle
+import string, re, os, sys
 
 ##########
 #get/clean data
@@ -80,7 +80,8 @@ def generate_ngrams(lang, n):
 
     #read in wordlists from all files in lang/clean
     #TODO actually pull data from wikipedia
-    all_wordlist = file_to_wordlist(lang, "2of12inf.txt")
+    all_wordlist = get_all_files(lang)
+    #file_to_wordlist(lang, "2of12inf.txt")
 
     grams = {}
     for word in all_wordlist:
