@@ -13,33 +13,30 @@ location = "dict"
 
 ##########
 
+def add_all_files(ngrams, n, language):
+    filenames = os.listdir("./data/" + language + "/" + location + "/")
 
-#get text
-def file_to_wordlist(language, filename):
+    for filename in filenames:
+        add_whole_file_to_ngrams(ngrams, n, language, filename)
+
+
+def add_whole_file_to_ngrams(ngrams, n, language, filename):
     filepath = "./data/" + language + "/" + location + "/" + filename
     f = open(filepath, "r")
-    content = f.read()
-    #content.rstrip()
-    #re.sub(r'[a-z\ ]*', '', content)
 
-    #sanitize
-    for w in content:
-        if not (w.islower() or w == " "):
-            w = " "
-    return get_wordlist(content)
+    c = " "
+    word = ""
 
+    while c != "": #EOF
+        c = f.read(1)
 
-def get_all_files(language):
-    filenames = os.listdir("./data/" + language + "/" + location + "/")
-    total_wordlist =[]
-    for filename in filenames:
-        total_wordlist += file_to_wordlist(language, filename)
-    return total_wordlist
-
-#get wordlist
-def get_wordlist(clean_text):
-    return clean_text.split(" ")
-
+        if c == " " or c == "\n":
+            #add word to ngrams
+            if len(word) > 0:
+                add_word_to_ngrams(ngrams, n, word)
+            word = ""
+        else:
+            word += c
     
 ##########
 #make ngram list
@@ -72,30 +69,27 @@ def instantiate_and_return(key, dicti):
     return dicti[key]
 
 
-def add_word_to_xgrams(xgrams, x, word):
-    padding = x-1
+def add_word_to_ngrams(ngrams, n, word):
+    padding = n-1
     padded_word = " "*padding+ word + " "*padding
 
     for i in range( len(word)+padding ):
-        gram = padded_word[i:i+x]
-        change_nested_element(gram, xgrams)
+        gram = padded_word[i:i+n]
+        change_nested_element(gram, ngrams)
 
-    return xgrams
+    return ngrams
 
 
 
 #make ngrams from all words
 def generate_ngrams(lang, n):
 
-    #read in wordlists from all files in lang/clean
-    #TODO actually pull data from wikipedia
-    all_wordlist = get_all_files(lang)
-    #file_to_wordlist(lang, "2of12inf.txt")
+    #read in wordlists from all files in lang/dict
+    #TODO actually pull data from wikipedia in lang/clean
 
-    grams = {}
-    for word in all_wordlist:
-        add_word_to_xgrams(grams, n, word)
+    ngrams = {}
+    add_all_files(ngrams, n, lang)
 
-    pprint.pprint(grams)
+    pprint.pprint(ngrams)
 
-    return grams
+    return ngrams
