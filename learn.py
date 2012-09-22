@@ -1,13 +1,22 @@
 #!/usr/bin/python
 
-import string, re, os, sys
+import string, re, os, sys, pprint
 
 ##########
 #get/clean data
 
+#dict uses found dictionary files
+location = "dict"
+
+#clean uses cleaned wikipedia articles (doesn't work)
+#location = "clean"
+
+##########
+
+
 #get text
 def file_to_wordlist(language, filename):
-    filepath = "./data/" + language + "/clean/" + filename
+    filepath = "./data/" + language + "/" + location + "/" + filename
     f = open(filepath, "r")
     content = f.read()
     #content.rstrip()
@@ -21,7 +30,7 @@ def file_to_wordlist(language, filename):
 
 
 def get_all_files(language):
-    filenames = os.listdir("./data/" + language + "/clean/")
+    filenames = os.listdir("./data/" + language + "/" + location + "/")
     total_wordlist =[]
     for filename in filenames:
         total_wordlist += file_to_wordlist(language, filename)
@@ -86,5 +95,7 @@ def generate_ngrams(lang, n):
     grams = {}
     for word in all_wordlist:
         add_word_to_xgrams(grams, n, word)
+
+    pprint.pprint(grams)
 
     return grams
