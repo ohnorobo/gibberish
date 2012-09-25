@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, re, os, sys, pprint
+import string, re, os, sys, pprint, codecs
 
 ##########
 #get/clean data
@@ -22,7 +22,10 @@ def add_all_files(ngrams, n, language):
 
 def add_whole_file_to_ngrams(ngrams, n, language, filename):
     filepath = "./data/" + language + "/" + location + "/" + filename
-    f = open(filepath, "r")
+
+    #use codecs is reading a non-ascii file
+    f = codecs.open(filepath, encoding ='utf-16', mode="r")
+    #f = open(filepath, "r")
 
     c = " "
     word = ""

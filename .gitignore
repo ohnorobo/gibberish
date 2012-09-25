@@ -1,0 +1,7 @@
+*.pyc
+
+all_ngrams
+
+data/*/clean/*
+data/*/dirty/*
+
