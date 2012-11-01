@@ -1,0 +1,45 @@
+﻿
+Language    Language (local)    Wiki    Random Page
+
+English English en  https://en.wikipedia.org/wiki/Special:Random
+German  Deutsch de  https://de.wikipedia.org/wiki/Spezial:Zuf%C3%A4llige_Seite
+French  Français    fr  https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard
+Dutch   Nederlands  nl  https://nl.wikipedia.org/wiki/Speciaal:Willekeurig
+Italian Italiano    it
+Polish  Polski  pl
+Spanish Español es
+Russian Русский ru
+Japanese    日本語 ja
+Portuguese  Português   pt
+Chinese 中文    zh
+Swedish Svenska sv
+Vietnamese  Tiếng Việt  vi
+Ukrainian   Українська  uk
+Catalan Català  ca
+Norwegian   Norsk   no
+Finnish Suomi   fi
+Czech   Čeština cs
+Persian فارسی   fa
+Hungarian   Magyar  hu
+Romanian    Română  ro
+Korean  한국어  ko
+Arabic  العربية ar
+Turkish Türkçe  tr
+Indonesian  Bahasa Indonesia    id
+Slovak  Slovenčina  sk
+Esperanto   Esperanto   eo
+Danish  Dansk   da
+Kazakh  Қазақша kk
+Serbian Српски  Srpski  sr
+Lithuanian  Lietuvių    lt
+Malay   Bahasa Melayu   ms
+Hebrew  עברית   he
+Bulgarian   Български   bg
+Basque  Euskara eu
+Slovenian   Slovenščina sl
+Volapük Volapük vo
+Croatian    Hrvatski    hr
+Waray-Waray Winaray war
+Hindi   हिन्दी  hi  
+Estonian    Eesti   et
+
