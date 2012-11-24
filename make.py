@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import string, random 
+import string, random
 
 ##########
 #generate string
@@ -48,7 +48,10 @@ def choose_likely_char(tail, xgrams, x):
 
 
 def generate_m_strings(m, ngrams, n):
+    strings = []
     for i in range(m):
-        string = generate_string(ngrams, n)
-        print string #.encode('unicode')
+        string += generate_string(ngrams, n)
+        #print string #.encode('unicode')
             #encoding for non-english chars
+    return strings
+
