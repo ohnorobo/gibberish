@@ -30,30 +30,38 @@ def generate_strings_w_ngrams(lang, m, all_ngrams):
 ##################
 
 #get stored ngrams
-def unpickle():
+def load_ngrams():
     if os.path.isfile("./all_ngrams"):
         f = file(PICKLE_LOCATION, "r")
         all_ngrams = pickle.load(f)
     else:
         all_ngrams = {}
+    return all_ngrams
 
 #store ngrams
-def pickle(all_ngrams):
+def save_ngrams(all_ngrams):
     f = file(PICKLE_LOCATION, "w")
     pickle.dump(all_ngrams, f)
 
 ##################
+#Programatic interface
 
 def generate_strings(lang, m):
-    all_ngrams = unpickle()
+    all_ngrams = load_ngrams()
     return generate_strings_w_ngrams(lang, m, all_ngrams)
 
 def learn_ngrams(lang, n):
-    all_ngrams = unpickle()
+    all_ngrams = load_ngrams()
     learn_ngrams_w_ngrams(lang, n, all_ngrams)
-    pickle(all_ngrams)
+    save_ngrams(all_ngrams)
+
+def get_available_languages():
+    all_ngrams = load_ngrams()
+    return []
+
 
 ##################
+#Command line interface
 
 def print_instructions():
     print '''How to use gibberish:
@@ -69,33 +77,35 @@ def print_instructions():
           language codes are in ISO 639-1'''
 
 ##########
-#main
 
-if not(len(sys.argv) == 4):
-    print_instructions()
-    exit()
+#if there are no command line args run interactivly
+if len(sys.argv) > 1:
 
-#get command args
-lang = sys.argv[1]
-operation = sys.argv[2]
-number = sys.argv[3]
-n = int(number)
+    if not(len(sys.argv) == 4):
+        print_instructions()
+        exit()
 
-#learn about data
-if operation == "learn":
-    learn_ngrams(lang, n)
-    exit()
+    #get command args
+    lang = sys.argv[1]
+    operation = sys.argv[2]
+    number = sys.argv[3]
+    n = int(number)
 
-#generate strings
-if operation == "make":
-    strings = generate_strings(lang, n)
-    for word in words:
-        print word
-    exit()
+    #learn about data
+    if operation == "learn":
+        learn_ngrams(lang, n)
+        exit()
 
-else:
-    print_instructions()
-    exit()
+    #generate strings
+    if operation == "make":
+        words = generate_strings(lang, n)
+        for word in words:
+            print word
+        exit()
+
+    else:
+        print_instructions()
+        exit()
 
 ##########
 

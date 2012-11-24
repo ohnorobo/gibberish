@@ -8,8 +8,9 @@ def hello():
     return "Hello World!"
 
 @app.route("/")
-@app.route("/index/<lang>")
-def index(lang):
+@app.route("/index")
+#@app.route("/index/<lang>")
+def index():
     lang = "en"
     w = ["a", "b"]
     w = gibberish.generate_strings(lang, 5)
