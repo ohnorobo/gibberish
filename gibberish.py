@@ -76,7 +76,7 @@ def print_instructions():
 ##########
 
 #if there are no command line args run interactivly
-if len(sys.argv) < 2:
+if len(sys.argv) < 3:
     all_ngrams = load_ngrams()
 
 else:

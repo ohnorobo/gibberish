@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import flask, gibberish
+import sys, flask, gibberish
 
 app = flask.Flask(__name__)
 
@@ -21,4 +21,9 @@ def indexen():
 
 if __name__ == "__main__":
     #app.debug = True
-    app.run(port=80)
+
+    port=80    #run on 80 by default
+    if sys.argv[1]: #run on port given from heroku
+        port=sys.argv[1]
+
+    app.run(port=int(port))
