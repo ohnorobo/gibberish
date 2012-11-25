@@ -26,4 +26,4 @@ if __name__ == "__main__":
     if sys.argv[1]: #run on port given from heroku
         port=sys.argv[1]
 
-    app.run(host="0.0.0.0" port=int(port))
+    app.run(host="0.0.0.0", port=int(port))
