@@ -1,12 +1,25 @@
 <html>
   <head>
     <title>gibberish</title>
+    <link href="../static/bootstrap-responsive.min.css" rel="stylesheet">
   </head>
   <body>
-      <h1>{{lang}}</h1>
+
+      <div>
+        <a href="/index">gibberish</a>
+        <a href="https://github.com/ohnorobo/gibberish">github</a>
+      <div>
+
+      <h3>{{lang}}</h3>
       
       {% for word in words %}
       <p> {{word}} <p>
+      {% endfor %}
+
+      <h4>available languages</h4>
+      
+      {% for language in available_languages %}
+      <a href="/index/{{language}}">{{language}}</a>
       {% endfor %}
 
   </body>

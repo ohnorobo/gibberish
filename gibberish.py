@@ -4,13 +4,14 @@ import string, pprint, random, re, os, sys, pickle
 import learn, make
 
 PICKLE_LOCATION = "./all_ngrams"
+all_ngrams = {}
 
 ##################
 ##################
 #Administration methods
 
 def learn_ngrams_w_ngrams(lang, n, all_ngrams):
-    #TODO do we want to be able to store different gram for the ame language?
+    #TODO do we want to be able to store different gram for the same language?
     # (say store both 4grams and 5grams for russian simultaniously)
     ngrams = learn.generate_ngrams(lang, n)
     all_ngrams[lang] = [n, ngrams]
@@ -47,18 +48,14 @@ def save_ngrams(all_ngrams):
 #Programatic interface
 
 def generate_strings(lang, m):
-    all_ngrams = load_ngrams()
     return generate_strings_w_ngrams(lang, m, all_ngrams)
 
 def learn_ngrams(lang, n):
-    all_ngrams = load_ngrams()
     learn_ngrams_w_ngrams(lang, n, all_ngrams)
     save_ngrams(all_ngrams)
 
 def get_available_languages():
-    all_ngrams = load_ngrams()
-    return []
-
+    return all_ngrams.keys()
 
 ##################
 #Command line interface
@@ -79,11 +76,16 @@ def print_instructions():
 ##########
 
 #if there are no command line args run interactivly
-if len(sys.argv) > 1:
+if len(sys.argv) < 2:
+    all_ngrams = load_ngrams()
+
+else:
 
     if not(len(sys.argv) == 4):
         print_instructions()
         exit()
+
+    all_ngrams = load_ngrams()
 
     #get command args
     lang = sys.argv[1]
@@ -108,6 +110,4 @@ if len(sys.argv) > 1:
         exit()
 
 ##########
-
-
 
