@@ -1,1 +1,1 @@
-web: python frontend.py $PORT
+web: python frontend.py $PORT 0.0.0.0
