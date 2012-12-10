@@ -10,6 +10,7 @@ def hello():
 @app.route("/index/<lang>")
 def index(lang):
     w = gibberish.generate_strings(lang, 5)
+    print w
     available_langs = gibberish.get_available_languages()
     return flask.render_template("index.html", words=w, lang=lang, available_languages=available_langs)
 
@@ -20,10 +21,11 @@ def indexen():
 
 
 if __name__ == "__main__":
-    #app.debug = True
+    app.debug = True
 
     port=80    #run on 80 by default
     if sys.argv[1]: #run on port given from heroku
         port=sys.argv[1]
 
-    app.run(host="0.0.0.0", port=int(port))
+    #app.run(host="0.0.0.0", port=int(port))
+    app.run(port=int(port))

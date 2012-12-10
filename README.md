@@ -1,4 +1,7 @@
-## A gibberish word creator using markov chains
+## A gibberish word generator using markov chains
+
+#### In action
+https://boiling-oasis-5004.herokuapp.com/index
 
 This program learns the low-level characteristics of a language through ngrams, then uses a markov chain to invent new plausible sounding words for that language.
 

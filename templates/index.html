@@ -1,26 +1,59 @@
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>gibberish</title>
-    <link href="../static/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- Le styles -->
+    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/custom.css" rel="stylesheet">
+    <!--link href="../static/bootstrap-responsive.min.css" rel="stylesheet"-->
+    <link rel="shortcut icon" href="../static/favicon.ico">
   </head>
+
   <body>
 
-      <div>
-        <a href="/index">gibberish</a>
-        <a href="https://github.com/ohnorobo/gibberish">github</a>
-      <div>
+    <div id = "wrap"> <!--for sticky footer -->
 
-      <h3>{{lang}}</h3>
-      
-      {% for word in words %}
-      <p> {{word}} <p>
-      {% endfor %}
+    <div class="page-header">
+      <div class="container">
+        <h2>
+          <a href="/index">Gibberish</a>
+          <iframe src="http://ghbtns.com/github-btn.html?user=ohnorobo&repo=gibberish&type=fork"
+          allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+        </h2>
+        <p>statistically plausible words</p>
+      </div>
+    </div>
 
-      <h4>available languages</h4>
+    <div id="push"></div>
+
+    <div class="container">
+      <h4>{language_name}</h4>
       
-      {% for language in available_languages %}
-      <a href="/index/{{language}}">{{language}}</a>
-      {% endfor %}
+      <ul>
+        {% for word in words %}
+        <li><p> {{word}} </p></li>
+        {% endfor %}
+      </ul>
+      
+      <div id="push"></div>
+    </div>
+
+    </div> <!-- for sticky footer -->
+
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">
+            other languages 
+            {% for language in available_langiages %}
+            &middot; <a href="/index/{{language}}">{{language}}</a> 
+            {% endfor %}
+        </p>
+      </div>
+    </div>
 
   </body>
 </html>
+

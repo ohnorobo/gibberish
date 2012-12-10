@@ -20,7 +20,7 @@ def generate_strings_w_ngrams(lang, m, all_ngrams):
     if not all_ngrams.has_key(lang):
         print "no ngrams learned for " + lang
         print "current ngrams learned:"
-        print all_ngrams.keyset()
+        print all_ngrams.keys()
 
     else:
         pair = all_ngrams[lang]
@@ -75,12 +75,10 @@ def print_instructions():
 
 ##########
 
-#if there are no command line args run interactivly
-if len(sys.argv) < 3:
+def run_interactivly():
     all_ngrams = load_ngrams()
 
-else:
-
+def run_on_command_line():
     if not(len(sys.argv) == 4):
         print_instructions()
         exit()
@@ -111,3 +109,7 @@ else:
 
 ##########
 
+if __name__ == "__main__": #i.e. run directly
+    run_on_command_line()
+else:
+    run_interactivly()
