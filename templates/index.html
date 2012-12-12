@@ -30,7 +30,7 @@
     <div id="push"></div>
 
     <div class="container">
-      <h4>{language_name}</h4>
+      <h4>{{lang}}</h4>
       
       <ul>
         {% for word in words %}
@@ -47,7 +47,7 @@
       <div class="container">
         <p class="muted credit">
             other languages 
-            {% for language in available_langiages %}
+            {% for language in available_languages %}
             &middot; <a href="/index/{{language}}">{{language}}</a> 
             {% endfor %}
         </p>

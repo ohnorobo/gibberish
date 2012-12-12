@@ -10,13 +10,18 @@ def hello():
 @app.route("/index/<lang>")
 def index(lang):
     w = gibberish.generate_strings(lang, 5)
-    print w
     available_langs = gibberish.get_available_languages()
+    #lang = gibberish.get_language_full_name(lang)
+
+    print "##########"
+    print w
+    print available_langs
+
     return flask.render_template("index.html", words=w, lang=lang, available_languages=available_langs)
 
 @app.route("/")
 @app.route("/index")
-def indexen():
+def index_en():
     return index("en")
 
 

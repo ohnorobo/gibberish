@@ -7,6 +7,7 @@ html,
 body {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
+  overflow-x: hidden; /* removes horizontal scrollbar */
 }
 
 /* Wrapper for page content to push down footer */
@@ -33,9 +34,11 @@ body {
   margin: 20px 0;
 }
 
+
 .container {
   margin-left: 30px;
 }
+
 
 page-header,.page-header,#page-header{
   background: #303030;
