@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import string, random
 
@@ -7,7 +8,7 @@ import string, random
 
 def generate_string(xgrams, x):
     padding = x-1
-    string = " "*padding
+    string = u" "*padding
 
     while True:
         string = add_likely_char(string, xgrams, x)

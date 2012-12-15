@@ -1,4 +1,7 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 import sys, flask, gibberish
 
 app = flask.Flask(__name__)

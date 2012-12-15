@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import string, pprint, random, re, os, sys, pickle
 import learn, make

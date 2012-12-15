@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import string, re, os, sys, pprint, codecs
 
@@ -24,23 +25,27 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
     filepath = "./data/" + language + "/" + location + "/" + filename
 
     #use codecs is reading a non-ascii file
-    f = codecs.open(filepath, encoding ='utf-16', mode="r")
+
+    #for some reason my russian dictionary is utf-16
+    #f = codecs.open(filepath, encoding ='utf-16', mode="r")
     #f = open(filepath, "r")
+    f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
 
-    c = " "
-    word = ""
+    c = u" "
+    word = u""
 
-    while c != "": #EOF
+    while c != u"": #EOF
         c = f.read(1)
 
-        if c == " " or c == "\n":
+        if c == u" " or c == u"\n":
             #add word to ngrams
-            if len(word) > 0:
+            if (len(word) > 0) and (not u"\ufffd" in word):
+                #skip words with error codes
                 add_word_to_ngrams(ngrams, n, word)
-            word = ""
+            word = u""
         else:
             word += c
-    
+
 ##########
 #make ngram list
 
@@ -57,7 +62,7 @@ def change_nested_element(loc, nested):
     else:
         #print "loc" + str(len(loc)) + str(loc) + "\""
         #print nested
-        return change_nested_element(loc[1:], 
+        return change_nested_element(loc[1:],
                                      instantiate_and_return(loc[0], nested))
 
 def instantiate_or_increment(key, dicti):
@@ -74,7 +79,7 @@ def instantiate_and_return(key, dicti):
 
 def add_word_to_ngrams(ngrams, n, word):
     padding = n-1
-    padded_word = " "*padding+ word + " "*padding
+    padded_word = u" "*padding+ word + u" "*padding
 
     for i in range( len(word)+padding ):
         gram = padded_word[i:i+n]
