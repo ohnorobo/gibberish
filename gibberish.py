@@ -18,9 +18,6 @@ def learn_ngrams_w_ngrams(lang, n, all_ngrams):
     all_ngrams[lang] = [n, ngrams]
 
 def generate_strings_w_ngrams(lang, m, all_ngrams):
-    print "generating words"
-    print lang
-    print all_ngrams.keys()
 
     if not all_ngrams.has_key(lang):
         print "no ngrams learned for " + lang
@@ -39,11 +36,8 @@ def generate_strings_w_ngrams(lang, m, all_ngrams):
 def load_ngrams():
     global all_ngrams
     if os.path.isfile("./all_ngrams"):
-        print "found file"
         f = file(PICKLE_LOCATION, "r")
         all_ngrams = pickle.load(f)
-        #pprint.pprint(all_ngrams)
-        pprint.pprint(all_ngrams.keys())
     else:
         print "couldn't find file, starting from scratch"
         all_ngrams = {}
@@ -119,8 +113,6 @@ def run_on_command_line():
 ##########
 
 if __name__ == "__main__": #i.e. run directly
-    print "####command line###"
     run_on_command_line()
 else:
-    print "####interactive###"
     run_interactivly()

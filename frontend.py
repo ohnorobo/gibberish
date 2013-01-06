@@ -24,13 +24,12 @@ def index_en():
 if __name__ == "__main__":
     app.debug = True
 
-    port=80    #run on 80 by default
     host="127.0.0.1"
+    port=80    #run on 80 by default
 
     if sys.argv[1]: #run on port given from heroku
-        port=sys.argv[1]
+        host = sys.argv[1]
     if sys.argv[2]: #run on host given from heroku
-        host = sys.argv[2]
+        port = sys.argv[2]
 
     app.run(host=host, port=int(port))
-    #app.run(port=int(port))

@@ -151,10 +151,3 @@ def get_language_full_name(code):
     else:
         return code
 
-
-#main
-print get_language_full_name("en")
-print get_language_full_name("eu")
-print get_language_full_name("nl")
-print get_language_full_name("zz")
-

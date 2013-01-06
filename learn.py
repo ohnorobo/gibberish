@@ -24,11 +24,13 @@ def add_all_files(ngrams, n, language):
 def add_whole_file_to_ngrams(ngrams, n, language, filename):
     filepath = "./data/" + language + "/" + location + "/" + filename
 
-    #use codecs is reading a non-ascii file
-
     #for some reason my russian dictionary is utf-16
     #f = codecs.open(filepath, encoding ='utf-16', mode="r")
+
+    #for ascii files (needed?)
     #f = open(filepath, "r")
+
+    #for utf8 files, with replace for errors
     f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
 
     c = u" "
@@ -56,12 +58,9 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
 #all elements of loc must be < length of nested arrays
 def change_nested_element(loc, nested):
     if len(loc) == 1 :
-        #print "loc" + str(loc) + "\""
         instantiate_or_increment(loc[0], nested)
         return nested[loc[0]]
     else:
-        #print "loc" + str(len(loc)) + str(loc) + "\""
-        #print nested
         return change_nested_element(loc[1:],
                                      instantiate_and_return(loc[0], nested))
 
