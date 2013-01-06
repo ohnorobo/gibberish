@@ -3,24 +3,17 @@
 
 
 import sys, flask, gibberish
+import iso_lang_codes
 
 app = flask.Flask(__name__)
-
-@app.route("/hello")
-def hello():
-    return "Hello World!"
 
 @app.route("/index/<lang>")
 def index(lang):
     w = gibberish.generate_strings(lang, 5)
     available_langs = gibberish.get_available_languages()
-    #lang = gibberish.get_language_full_name(lang)
+    lang_name = iso_lang_codes.get_language_full_name(lang)
 
-    print "##########"
-    print w
-    print available_langs
-
-    return flask.render_template("index.html", words=w, lang=lang, available_languages=available_langs)
+    return flask.render_template("index.html", words=w, lang=lang_name, available_languages=available_langs)
 
 @app.route("/")
 @app.route("/index")
