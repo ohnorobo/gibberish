@@ -22,16 +22,17 @@ def add_all_files(ngrams, n, language):
 
 
 def add_whole_file_to_ngrams(ngrams, n, language, filename):
+    errors = 0
     filepath = "./data/" + language + "/" + location + "/" + filename
 
-    #for some reason my russian dictionary is utf-16
-    #f = codecs.open(filepath, encoding ='utf-16', mode="r")
+    #for some reason my french/russian dictionaries are utf-16
+    f = codecs.open(filepath, encoding ='utf-16', mode="r")
 
     #for ascii files (needed?)
     #f = open(filepath, "r")
 
     #for utf8 files, with replace for errors
-    f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
+    #f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
 
     c = u" "
     word = u""
@@ -41,12 +42,16 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
 
         if c == u" " or c == u"\n":
             #add word to ngrams
-            if (len(word) > 0) and (not u"\ufffd" in word):
-                #skip words with error codes
+            if len(word) > 0:
+                if not u"\ufffd" in word:
+                    #skip words with error codes
+                    errors += 1
                 add_word_to_ngrams(ngrams, n, word)
             word = u""
         else:
             word += c
+
+    print "errors", errors
 
 ##########
 #make ngram list
