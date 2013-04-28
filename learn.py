@@ -26,13 +26,13 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
     filepath = "./data/" + language + "/" + location + "/" + filename
 
     #for some reason my french/russian dictionaries are utf-16
-    f = codecs.open(filepath, encoding ='utf-16', mode="r")
+    #f = codecs.open(filepath, encoding ='utf-16', mode="r")
 
     #for ascii files (needed?)
     #f = open(filepath, "r")
 
     #for utf8 files, with replace for errors
-    #f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
+    f = codecs.open(filepath, encoding='utf-8', mode='r', errors='replace')
 
     c = u" "
     word = u""
