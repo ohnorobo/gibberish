@@ -27,7 +27,7 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
 
     #for some reason my french/russian dictionaries are utf-16
     #f = codecs.open(filepath, encoding ='utf-16', mode="r")
-    #f = codecs.open(filepath, encoding ='utf-16-be', mode="r")
+    f = codecs.open(filepath, encoding ='utf-16-be', mode="r")
 
     # greek - iso8859-7
 
