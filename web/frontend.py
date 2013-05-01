@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys, flask, os
 
-import sys, flask, gibberish
-import iso_lang_codes
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
+import gibberish
 
 app = flask.Flask(__name__)
 
@@ -11,7 +13,7 @@ app = flask.Flask(__name__)
 def index(lang):
     w = gibberish.generate_strings(lang, 5)
     available_langs = gibberish.get_available_languages()
-    lang_name = iso_lang_codes.get_language_full_name(lang)
+    lang_name = gibberish.get_language_full_name(lang)
 
     return flask.render_template("index.html", words=w, lang=lang_name, available_languages=available_langs)
 
