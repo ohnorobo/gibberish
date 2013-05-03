@@ -12,20 +12,15 @@ body {
   padding-right: 0px;
 }
 
-/* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by it's height */
-  margin: 0 auto -60px;
-}
-
-/* Set the fixed height of the footer here */
 /*#push, */
 #footer {
-  height: 60px;
+  height: 40px;
   background-color: #f5f5f5;
+  position: fixed;
+  /*z-index: 100; */
+  bottom: 0; 
+  left: 0;
+  width: 100%;
 }
 
 #push {
@@ -33,7 +28,7 @@ body {
 }
 
 .credit {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 
@@ -46,4 +41,20 @@ page-header,.page-header,#page-header{
   background: #303030;
   color: white;
   margin: 0px; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 10px;
+} 
+
+
+#scrollbox{ 
+    margin: 120px auto 100px;
+    overflow:auto; 
+}
+
