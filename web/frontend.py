@@ -3,6 +3,7 @@
 
 import sys, flask, os
 
+#incantation to fix python imports
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
 import gibberish
@@ -11,11 +12,16 @@ app = flask.Flask(__name__)
 
 @app.route("/index/<lang>")
 def index(lang):
-    w = gibberish.generate_strings(lang, 5)
+    w = gibberish.generate_strings(lang, 10)
     available_langs = gibberish.get_available_languages()
     lang_name = gibberish.get_language_full_name(lang)
 
-    return flask.render_template("index.html", words=w, lang=lang_name, available_languages=available_langs)
+    return flask.render_template("index.html", words=w, lang=lang, lang_name=lang_name, available_languages=available_langs)
+
+@app.route("/scroll/<lang>")
+def scroll(lang):
+    w = gibberish.generate_strings(lang, 5)
+    return flask.render_template("scroll.html", words=w)
 
 @app.route("/")
 @app.route("/index")
