@@ -11,15 +11,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/custom.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/favicon.ico">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+    <!-- autoscrolling --!>
+    <script type="text/javascript">
+      $('document').ready(function(){
+          scrollalert();
+      });
+      function scrollalert(){
+          var scrolltop=$('#scrollbox').offset().top
+          var scrollheight=$('#scrollbox').prop('scrollHeight');
+          var windowheight=$(window).height()
+          var scrolloffset=60;
+          if(-1*scrolltop>=(scrollheight-(windowheight+scrolloffset)))
+          {
+              //fetch new items
+              $.get('/scroll/{{lang}}', '', function(newitems){
+                  $('#wordlist').append(newitems);
+              });
+          }
+          setTimeout('scrollalert();', 1500);
+      }
+    </script>
   </head>
 
   <body>
 
-    <div id = "wrap"> <!--for sticky footer -->
-
     <div class="page-header">
       <div class="container">
-        <h2>
+      <h2>
           <a href="/index">Gibberish</a>
           <iframe src="http://ghbtns.com/github-btn.html?user=ohnorobo&repo=gibberish&type=fork"
           allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
@@ -28,21 +47,19 @@
       </div>
     </div>
 
-    <div id="push"></div>
 
-    <div class="container">
-      <h4>{{lang}}</h4>
+    <div id="scrollbox">
+      <div class="container">
+          <h4>{{lang_name}}</h4>
       
-      <ul>
-        {% for word in words %}
-        <li><p> {{word}} </p></li>
-        {% endfor %}
-      </ul>
-      
-      <div id="push"></div>
+          <ul id="wordlist">
+            {% for word in words %}
+            <li><p> {{word}} </p></li>
+            {% endfor %}
+          </ul>
+      </div>
     </div>
 
-    </div> <!-- for sticky footer -->
 
     <div id="footer">
       <div class="container">
@@ -55,6 +72,6 @@
       </div>
     </div>
 
-  </body>
+   </body>
 </html>
 

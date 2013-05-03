@@ -6,7 +6,7 @@ https://gibberish.herokuapp.com/index
 This program learns the low-level characteristics of a language through ngrams, then uses a markov chain to invent new plausible sounding words for that language.
 
 to get started run  
-> ./gibberish en learn 3  
+> ./gibberish en train 3  
 > ./gibberish en make 10  
 
 ### Sample words generated from a dictionary and trigrams
