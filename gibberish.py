@@ -213,13 +213,13 @@ def add_whole_file_to_ngrams(ngrams, n, language, filename):
                 if not u"\ufffd" in word:
                     #skip words with error codes
                     errors += 1
-                print word
+                print(word)
                 add_word_to_ngrams(ngrams, n, word)
             word = u""
         else:
             word += c
 
-    print "errors", errors
+    print(("errors", errors))
 
 ##########
 #make ngram list
@@ -351,10 +351,10 @@ def train_ngrams_w_ngrams(lang, n, all_ngrams):
 
 def generate_strings_w_ngrams(lang, m, all_ngrams):
 
-    if not all_ngrams.has_key(lang):
-        print "no ngrams trained for " + lang
-        print "current ngrams trained:"
-        print all_ngrams.keys()
+    if lang not in all_ngrams:
+        print("no ngrams trained for " + lang)
+        print("current ngrams trained:")
+        print(all_ngrams.keys())
 
     else:
         pair = all_ngrams[lang]
@@ -368,15 +368,15 @@ def generate_strings_w_ngrams(lang, m, all_ngrams):
 def load_ngrams():
     global all_ngrams
     if os.path.isfile("./all_ngrams"):
-        f = file(PICKLE_LOCATION, "r")
+        f = open(PICKLE_LOCATION, "rb")
         all_ngrams = pickle.load(f)
     else:
-        print "couldn't find file, starting from scratch"
+        print("couldn't find file, starting from scratch")
         all_ngrams = {}
 
 #store ngrams
 def save_ngrams(all_ngrams):
-    f = file(PICKLE_LOCATION, "w")
+    f = open(PICKLE_LOCATION, "wb")
     pickle.dump(all_ngrams, f)
 
 ##################
@@ -396,7 +396,7 @@ def get_available_languages():
 #Command line interface
 
 def print_instructions():
-    print '''How to use gibberish:
+    print('''How to use gibberish:
 
           ./gibberish lang_code train n
           finds examples of that language created ngrams
@@ -406,7 +406,7 @@ def print_instructions():
           produces n nonsense words of the given language
           ex: ./gibberish en make 10
 
-          language codes are in ISO 639-1'''
+          language codes are in ISO 639-1''')
 
 ##########
 
@@ -435,7 +435,7 @@ def run_on_command_line():
     if operation == "make":
         words = generate_strings(lang, n)
         for word in words:
-            print word
+            print(word)
         exit()
 
     else:
